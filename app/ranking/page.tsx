@@ -10,18 +10,18 @@ export default function RankingPage() {
 
   let reseñasOrdenadas = [...reseñas].sort((a, b) => b.puntuaciones.global - a.puntuaciones.global);
 
-  if (tipoRanking === 'ciudad') {
-    const porCiudad = reseñas.reduce((acc, r) => {
-      if (!acc[r.ciudad]) acc[r.ciudad] = [];
-      acc[r.ciudad].push(r);
+  if (tipoRanking === 'provincia') {
+    const porProvincia = reseñas.reduce((acc, r) => {
+      if (!acc[r.provincia]) acc[r.provincia] = [];
+      acc[r.provincia].push(r);
       return acc;
     }, {} as Record<string, typeof reseñas>);
 
-    Object.keys(porCiudad).forEach(ciudad => {
-      porCiudad[ciudad].sort((a, b) => b.puntuaciones.global - a.puntuaciones.global);
+    Object.keys(porProvincia).forEach(provincia => {
+      porProvincia[provincia].sort((a, b) => b.puntuaciones.global - a.puntuaciones.global);
     });
 
-    return <RankingPorCiudad porCiudad={porCiudad} />;
+    return <RankingPorProvincia porProvincia={porProvincia} />;
   }
 
   if (tipoRanking === 'dificultad') {
@@ -34,17 +34,10 @@ export default function RankingPage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* HEADER */}
       <header className="bg-black/50 backdrop-blur border-b border-cyan-500/30">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <Image 
-              src="/images/logo/escaperoneros.png" 
-              alt="Escaperoneros" 
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
+            <Image src="/images/logo/escaperoneros.png" alt="Escaperoneros" width={50} height={50} className="rounded-full" />
             <h1 className="text-2xl font-bold text-yellow-400">ESCAPERONEROS</h1>
           </div>
           <ul className="flex gap-8 text-white/80 text-sm">
@@ -52,59 +45,39 @@ export default function RankingPage() {
             <li><Link href="/resenas" className="hover:text-cyan-400 transition">Reseñas</Link></li>
             <li><Link href="/ranking" className="hover:text-cyan-400 transition font-bold text-cyan-400">Ranking</Link></li>
             <li><Link href="/nosotros" className="hover:text-cyan-400 transition">Nosotros</Link></li>
-            <li>
-              <a href="https://www.instagram.com/escaperoneros" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition">
-                Instagram
-              </a>
-            </li>
+            <li><a href="https://www.instagram.com/escaperoneros" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition">Instagram</a></li>
           </ul>
         </nav>
       </header>
 
-      {/* CONTENIDO */}
       <section className="max-w-7xl mx-auto px-6 py-12">
         <h2 className="text-4xl font-bold text-white mb-8">🏆 Ranking de Salas</h2>
 
-        {/* OPCIONES DE RANKING */}
         <div className="flex gap-4 mb-8 flex-wrap">
           <button
             onClick={() => setTipoRanking('general')}
-            className={`px-6 py-2 rounded-lg font-bold transition ${
-              tipoRanking === 'general'
-                ? 'bg-cyan-500 text-black'
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-            }`}
+            className={`px-6 py-2 rounded-lg font-bold transition ${tipoRanking === 'general' ? 'bg-cyan-500 text-black' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`}
           >
             General
           </button>
           <button
-            onClick={() => setTipoRanking('ciudad')}
-            className={`px-6 py-2 rounded-lg font-bold transition ${
-              tipoRanking === 'ciudad'
-                ? 'bg-cyan-500 text-black'
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-            }`}
+            onClick={() => setTipoRanking('provincia')}
+            className={`px-6 py-2 rounded-lg font-bold transition ${tipoRanking === 'provincia' ? 'bg-cyan-500 text-black' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`}
           >
-            Por Ciudad
+            Por Provincia
           </button>
           <button
             onClick={() => setTipoRanking('dificultad')}
-            className={`px-6 py-2 rounded-lg font-bold transition ${
-              tipoRanking === 'dificultad'
-                ? 'bg-cyan-500 text-black'
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-            }`}
+            className={`px-6 py-2 rounded-lg font-bold transition ${tipoRanking === 'dificultad' ? 'bg-cyan-500 text-black' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`}
           >
             Por Dificultad
           </button>
         </div>
 
-        {/* RANKING GENERAL */}
         <div className="space-y-4">
           {reseñasOrdenadas.length > 0 ? (
             reseñasOrdenadas.map((reseña, index) => (
               <div key={reseña.id} className="bg-gray-800/50 rounded-lg p-4 border border-cyan-500/20 hover:border-cyan-500/50 transition flex items-center gap-6">
-                {/* Posición */}
                 <div className={`text-3xl font-bold w-12 h-12 flex items-center justify-center rounded-lg ${
                   index === 0 ? 'bg-yellow-400 text-black' :
                   index === 1 ? 'bg-gray-400 text-black' :
@@ -113,14 +86,10 @@ export default function RankingPage() {
                 }`}>
                   #{index + 1}
                 </div>
-
-                {/* Info */}
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-white">{reseña.nombre}</h3>
-                  <p className="text-gray-400">{reseña.ciudad} · {reseña.tematica} · Dificultad: {reseña.dificultad}/10</p>
+                  <p className="text-gray-400">{reseña.provincia} · {reseña.tematica} · Dificultad: {reseña.dificultad}/10</p>
                 </div>
-
-                {/* Puntuación */}
                 <div className="text-right">
                   <p className="text-2xl font-bold text-yellow-400">{reseña.puntuaciones.global}</p>
                   <p className="text-gray-400 text-sm">de 10</p>
@@ -135,7 +104,6 @@ export default function RankingPage() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer className="bg-black/50 border-t border-cyan-500/20 mt-20">
         <div className="max-w-7xl mx-auto px-6 py-8 text-center text-gray-400">
           <p>© 2024 Escaperoneros. Hecho por jugadores, para jugadores.</p>
@@ -145,19 +113,13 @@ export default function RankingPage() {
   );
 }
 
-function RankingPorCiudad({ porCiudad }: any) {
+function RankingPorProvincia({ porProvincia }: any) {
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <header className="bg-black/50 backdrop-blur border-b border-cyan-500/30">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <Image 
-              src="/images/logo/escaperoneros.png" 
-              alt="Escaperoneros" 
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
+            <Image src="/images/logo/escaperoneros.png" alt="Escaperoneros" width={50} height={50} className="rounded-full" />
             <h1 className="text-2xl font-bold text-yellow-400">ESCAPERONEROS</h1>
           </div>
           <ul className="flex gap-8 text-white/80 text-sm">
@@ -165,23 +127,19 @@ function RankingPorCiudad({ porCiudad }: any) {
             <li><Link href="/resenas" className="hover:text-cyan-400 transition">Reseñas</Link></li>
             <li><Link href="/ranking" className="hover:text-cyan-400 transition font-bold text-cyan-400">Ranking</Link></li>
             <li><Link href="/nosotros" className="hover:text-cyan-400 transition">Nosotros</Link></li>
-            <li>
-              <a href="https://www.instagram.com/escaperoneros" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition">
-                Instagram
-              </a>
-            </li>
+            <li><a href="https://www.instagram.com/escaperoneros" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition">Instagram</a></li>
           </ul>
         </nav>
       </header>
 
       <section className="max-w-7xl mx-auto px-6 py-12">
-        <h2 className="text-4xl font-bold text-white mb-8">Ranking por Ciudad</h2>
+        <h2 className="text-4xl font-bold text-white mb-8">Ranking por Provincia</h2>
 
-        {Object.entries(porCiudad).map(([ciudad, reseñasCity]: any) => (
-          <div key={ciudad} className="mb-12">
-            <h3 className="text-2xl font-bold text-cyan-400 mb-4">{ciudad}</h3>
+        {Object.entries(porProvincia).map(([provincia, reseñasProv]: any) => (
+          <div key={provincia} className="mb-12">
+            <h3 className="text-2xl font-bold text-cyan-400 mb-4">{provincia}</h3>
             <div className="space-y-3">
-              {reseñasCity.map((reseña: any, index: number) => (
+              {reseñasProv.map((reseña: any, index: number) => (
                 <div key={reseña.id} className="bg-gray-800/50 rounded-lg p-4 border border-cyan-500/20 flex items-center gap-4">
                   <span className="text-lg font-bold text-yellow-400">#{index + 1}</span>
                   <div className="flex-1">
@@ -210,13 +168,7 @@ function RankingPorDificultad({ fácil, medio, difícil }: any) {
       <header className="bg-black/50 backdrop-blur border-b border-cyan-500/30">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <Image 
-              src="/images/logo/escaperoneros.png" 
-              alt="Escaperoneros" 
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
+            <Image src="/images/logo/escaperoneros.png" alt="Escaperoneros" width={50} height={50} className="rounded-full" />
             <h1 className="text-2xl font-bold text-yellow-400">ESCAPERONEROS</h1>
           </div>
           <ul className="flex gap-8 text-white/80 text-sm">
@@ -224,11 +176,7 @@ function RankingPorDificultad({ fácil, medio, difícil }: any) {
             <li><Link href="/resenas" className="hover:text-cyan-400 transition">Reseñas</Link></li>
             <li><Link href="/ranking" className="hover:text-cyan-400 transition font-bold text-cyan-400">Ranking</Link></li>
             <li><Link href="/nosotros" className="hover:text-cyan-400 transition">Nosotros</Link></li>
-            <li>
-              <a href="https://www.instagram.com/escaperoneros" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition">
-                Instagram
-              </a>
-            </li>
+            <li><a href="https://www.instagram.com/escaperoneros" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition">Instagram</a></li>
           </ul>
         </nav>
       </header>
@@ -246,7 +194,7 @@ function RankingPorDificultad({ fácil, medio, difícil }: any) {
                     <span className="text-lg font-bold text-yellow-400">#{index + 1}</span>
                     <div className="flex-1">
                       <p className="text-white font-bold">{reseña.nombre}</p>
-                      <p className="text-gray-400 text-sm">{reseña.ciudad}</p>
+                      <p className="text-gray-400 text-sm">{reseña.provincia}</p>
                     </div>
                     <span className="text-xl font-bold text-yellow-400">{reseña.puntuaciones.global}/10</span>
                   </div>
