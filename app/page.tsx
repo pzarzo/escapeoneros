@@ -44,7 +44,7 @@ export default function Home() {
             Reseñas detalladas, rankings y recomendaciones de jugadores para jugadores
           </p>
           <Link 
-            href="/reseñas"
+            href="/resenas"
             className="bg-cyan-500 hover:bg-cyan-600 text-black font-bold px-8 py-3 rounded-lg transition"
           >
             Ver todas las reseñas
@@ -63,7 +63,7 @@ export default function Home() {
                 </div>
                 <div className="p-6">
                   <h4 className="text-xl font-bold text-white mb-2">{reseña.nombre}</h4>
-                  <p className="text-cyan-400 text-sm mb-2">{reseña.ciudad} · {reseña.tematica}</p>
+                  <p className="text-cyan-400 text-sm mb-2">{reseña.provincia} · {reseña.tematica}</p>
                   <p className="text-gray-400 text-sm mb-4 line-clamp-2">{reseña.resena}</p>
                   <div className="flex justify-between items-center">
                     <span className="text-2xl font-bold text-yellow-400">{reseña.puntuaciones.global}/10</span>
