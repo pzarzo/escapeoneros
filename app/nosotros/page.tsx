@@ -2,10 +2,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const equipo = [
-  { nombre: "Lucas", foto: "lucas.png", instagram: "https://www.instagram.com/luccaass.15" },
-  { nombre: "Pablo", foto: "pablo.png", instagram: "https://www.instagram.com/pabloozarzo" },
-  { nombre: "Adrián", foto: "adrian.png", instagram: "https://www.instagram.com/adriaangraneell" },
-  { nombre: "Guillermo", foto: "guillermo.png", instagram: "https://www.instagram.com/guille_hernandez10" },
+  { nombre: "Lucas", instagram: "https://www.instagram.com/luccaass.15" },
+  { nombre: "Pablo", instagram: "https://www.instagram.com/pabloozarzo" },
+  { nombre: "Adrián", instagram: "https://www.instagram.com/adriaangraneell" },
+  { nombre: "Guillermo", instagram: "https://www.instagram.com/guille_hernandez10" },
 ];
 
 export default function NosotrosPage() {
@@ -26,7 +26,7 @@ export default function NosotrosPage() {
           </div>
           <ul className="flex gap-8 text-white/80 text-sm">
             <li><Link href="/" className="hover:text-cyan-400 transition">Inicio</Link></li>
-            <li><Link href="/resenas" className="hover:text-cyan-400 transition">Reseñas</Link></li>
+            <li><Link href="/reseñas" className="hover:text-cyan-400 transition">Reseñas</Link></li>
             <li><Link href="/ranking" className="hover:text-cyan-400 transition">Ranking</Link></li>
             <li><Link href="/nosotros" className="hover:text-cyan-400 transition font-bold text-cyan-400">Nosotros</Link></li>
             <li>
@@ -109,14 +109,9 @@ export default function NosotrosPage() {
           <h3 className="text-2xl font-bold text-cyan-400 mb-8">El Equipo</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {equipo.map((persona) => (
-              <div key={persona.nombre} className="bg-gray-800/50 rounded-lg p-8 border border-cyan-500/20 text-center">
-                <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden relative">
-                  <Image
-                    src={`/images/team/${persona.foto}`}
-                    alt={persona.nombre}
-                    fill
-                    className="object-cover"
-                  />
+              <div key={persona.nombre} className="bg-gray-800/50 rounded-lg p-8 border border-cyan-500/20 text-center hover:border-cyan-500/50 transition">
+                <div className="w-24 h-24 bg-gradient-to-br from-cyan-500/20 to-yellow-500/20 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">
+                  👤
                 </div>
                 <h4 className="text-xl font-bold text-white mb-4">{persona.nombre}</h4>
                 
